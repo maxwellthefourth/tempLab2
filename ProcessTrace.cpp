@@ -28,15 +28,19 @@ void ProcessTrace::Execute() {
         std::istringstream iss(tempLine);
         while (iss >> tempWord) { // Look at the first word of the line
             if (tempWord == "alloc") {
-                int val;
+                unsigned int val;
                 iss >> std::hex >> val; // Converts value from hex to dec
                 arr.resize(val);
+                std::fill(arr.begin(), arr.end(), 0); // Set all values in vector to 0
             }
             else if (tempWord == "compare") {
                 
             }
             else if (tempWord == "put") {
-                
+                unsigned int addr, val;
+                iss >> std::hex >> addr;
+                cout << "Address: " << addr << endl;
+                // for loop
             }
             else if (tempWord == "fill") {
                 
@@ -52,5 +56,6 @@ void ProcessTrace::Execute() {
             }
         }
     }
+    cout << arr.size() << endl;
 }
 
