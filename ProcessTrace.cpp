@@ -19,7 +19,7 @@ ProcessTrace::ProcessTrace(string executionFile) {
 
 void ProcessTrace::Execute() {
     // allocate an empty array as an std::vector<uint8_t> type
-    std::vector<uint8_t> arr(0);
+    std::vector<uint8_t> arr;
     
     // execute the commands in the trace file, using the vector as the memory referenced by the commands
     string tempLine, tempWord;
@@ -34,13 +34,23 @@ void ProcessTrace::Execute() {
                 std::fill(arr.begin(), arr.end(), 0); // Set all values in vector to 0
             }
             else if (tempWord == "compare") {
-                
+                unsigned int addr, val;
+                iss >> std::hex >> addr;
+                while (iss >> val) {
+                    if (arr[addr] != val) {
+                        cout << "compare error at address " << addr << ", expected " << val << ", actual " << arr[addr] << endl;
+                    }
+                    addr++;
+                }
             }
             else if (tempWord == "put") {
                 unsigned int addr, val;
                 iss >> std::hex >> addr;
-                cout << "Address: " << addr << endl;
-                // for loop
+                while (iss >> val) {
+                    arr[addr] = val;
+                    cout << "Value at " << addr << " is now " << val << endl;
+                    addr++;
+                }
             }
             else if (tempWord == "fill") {
                 
@@ -56,6 +66,5 @@ void ProcessTrace::Execute() {
             }
         }
     }
-    cout << arr.size() << endl;
 }
 
