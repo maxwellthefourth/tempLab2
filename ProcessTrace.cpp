@@ -6,6 +6,7 @@
  */
 
 #include "ProcessTrace.h"
+#include <iomanip>
 
 ProcessTrace::ProcessTrace(string executionFile) {
     // Open execution trace file
@@ -38,7 +39,7 @@ void ProcessTrace::Execute() {
                 iss >> std::hex >> addr;
                 while (iss >> val) {
                     if (arr[addr] != val) {
-                        cout << "compare error at address " << addr << ", expected " << val << ", actual " << arr[addr] << endl;
+                        cout << "compare error at address " << std::hex << addr << ", expected " << std::hex << val << ", actual " << std::hex << unsigned(arr[addr]) << endl;
                     }
                     addr++;
                 }
@@ -48,18 +49,38 @@ void ProcessTrace::Execute() {
                 iss >> std::hex >> addr;
                 while (iss >> val) {
                     arr[addr] = val;
-                    cout << "Value at " << addr << " is now " << val << endl;
                     addr++;
                 }
             }
             else if (tempWord == "fill") {
-                
+                unsigned int addr, count, val;
+                iss >> std::hex >> addr;
+                iss >> std::hex >> count;
+                iss >> std::hex >> val;
+                for (int i = 0; i < count; i++)
+                    arr[addr+i] = val;
             }
             else if (tempWord == "copy") {
-                
+                unsigned int dest_addr, src_addr, count;
+                iss >> std::hex >> dest_addr;
+                iss >> std::hex >> src_addr;
+                iss >> std::hex >> count;
+                for (int i = 0; i < count; i++)
+                    arr[dest_addr+i] = arr[src_addr+i];
             }
             else if (tempWord == "dump") {
-                
+                unsigned int addr, count;
+                iss >> std::hex >> addr;
+                iss >> std::hex >> count;
+                cout << addr << endl;
+                int i = 0;
+                for (; i < count; i++) {
+                    cout << " " << std::setw(2) << std::setfill('0') << std::hex << unsigned(arr[i+addr]);
+                    if (i % 16 == 15)
+                        cout << endl;
+                }
+                if (i % 16 != 0)
+                    cout << endl;
             }
             else {
                 // default
