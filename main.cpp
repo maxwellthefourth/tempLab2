@@ -1,6 +1,6 @@
 /* 
  * File:   main.cpp
- * Author: grant
+ * Author: Grant Kochmann and Maxwell Evans
  *
  * Created on January 18, 2018, 2:33 PM
  */
