@@ -1,6 +1,6 @@
 /* 
  * File:   ProcessTrace.h
- * Author: Grant Kochmann and Maxwell Evans
+ * Author: Grant Evans and Maxwell Kochmann
  *
  * Created on January 20, 2018, 4:12 PM
  */
